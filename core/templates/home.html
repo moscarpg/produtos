@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,44 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .card-largura {
+            max-width: 18rem;
+        }
+
+        .imagem-carrossel-um {
+            object-fit: cover;
+            object-position: 0 80%;
+            height: 400px;
+        }
+
+        .imagem-carrossel-dois {
+            object-fit: cover;
+            height: 400px;
+        }
+
+        .fonte-titulo {
+            font-family: 'Pacifico', cursive;
+        }
+
+        .cor-especial {
+            color: darkred;
+        }
+
+        .botao-cor-especial {
+            background-color: darkred;
+            color: white;
+        }
+
+        .borda-cor-especial {
+            border-color: darkred;
+        }
+
+        .card-posicao-imagem {
+            object-fit: cover;
+            height: 200px;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,20 +56,26 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExample07">
-                
+
                 <form class="form-inline my-2 my-md-0">
-                    <input class="form-control" type="text" placeholder="Pesquisa" aria-label="Search" id="pesquisa">
+                    <input class="form-control" type="text" onkeyup="search_product()" placeholder="Pesquisa" aria-label="Search" id="pesquisa">
                 </form>
             </div>
         </div>
     </nav>
-    <div>
-        {% for produto in produtos %}
-            {{produto.nome}}
-            {{produto.preco}}
-            {{produto.corredor}}
-            <img src="{{produto.imagem.path}}" alt="">
-        {% endfor %}
+    <div class="card_group">
+        <div class="row">
+            {% for produto in produtos %}
+            <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4" style="width: 18em;">
+                <img class="card-img-top" src="{{produto.imagem}}" alt="Imagem de {{produto.nome}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{produto.nome}}</h5>
+                    <p class="card-text">R$ {{produto.preco}}</p>
+                    <p class="btn botao-cor-especial">Corredor {{produto.corredor}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -43,6 +87,24 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+
+    <script>
+        // JavaScript code
+        function search_product() {
+            let input = document.getElementById('pesquisa').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('produtos');
+
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    x[i].style.display = "none";
+                }
+                else {
+                    x[i].style.display = "flex";
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
